@@ -1,28 +1,23 @@
-﻿using dz7tum.enums
+﻿using Dz7tum.enums;
 using System;
-namespace dz7tum.classes
+namespace Dz7tum.classes
 {
     public class Bankacc
     {
-        private readonly Guid id; // id у аккаунта всегда один, поэтому логично сделать его объявляемым один раз
+        private static  uint _accountCounter;
+        private readonly uint _accountNumber;
         private decimal balance;
         private AccountType type;
 
-        public class BankAccount
+        public Bankacc(decimal initialBalance, AccountType accountType)
         {
-            private Guid id;
-            private decimal balance;
-            private AccountType type;
-            public BankAccount(decimal initialBalance, AccountType accountType)
+            balance = initialBalance;
+            type = accountType;
+            _accountNumber = _accountCounter++;
+        }
+        public uint accountNumber
             {
-                id = Guid.NewGuid();
-                balance = initialBalance;
-                type = accountType;
-            }
-
-            public Guid Id
-            {
-                get { return id; }
+                get { return _accountNumber+1; }
             }
 
             public decimal Balance
@@ -68,10 +63,30 @@ namespace dz7tum.classes
                     return false;
                 }
             }
-            public void PrintInfo()
+        public bool DepositFromOther(ref Bankacc sourceAccount, decimal amount)
+        {
+            if (amount <= 0)
+            {
+                Console.WriteLine("Сумма перевода должна быть больше нуля.");
+                return false;
+            }
+
+            if (sourceAccount.balance < amount)
+            {
+                Console.WriteLine($"Ошибка: На счете №{sourceAccount.accountNumber} недостаточно средств.");
+                return false;
+            }
+
+            sourceAccount.balance -= amount;
+            this.balance += amount;
+
+            Console.WriteLine($"Успешно списано {amount} со счета №{sourceAccount.accountNumber}");
+            return true;
+        }
+
+        public void PrintInfo()
             {
                 Console.WriteLine("\nТип счета:" + type + "\nБаланс:" + balance);
             }
         }
     }
-}

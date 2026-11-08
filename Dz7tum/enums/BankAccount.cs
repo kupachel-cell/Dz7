@@ -1,7 +1,5 @@
 ﻿using System;
-
-
-namespace dz1tum.enums
+namespace Dz7tum.enums
 {
     public enum AccountType
     {
@@ -9,4 +7,6 @@ namespace dz1tum.enums
         Savings,
         Deposit
     }
+
+
 }

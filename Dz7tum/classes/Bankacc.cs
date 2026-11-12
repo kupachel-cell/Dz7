@@ -80,7 +80,7 @@ namespace Dz7tum.classes
             sourceAccount.balance -= amount;
             this.balance += amount;
 
-            Console.WriteLine($"Успешно списано {amount} со счета №{sourceAccount.accountNumber}");
+            Console.WriteLine($"Успешно переведено {amount} со счета №{sourceAccount.accountNumber} на счет №{accountNumber}");
             return true;
         }
 
